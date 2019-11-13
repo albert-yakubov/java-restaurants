@@ -49,7 +49,7 @@ public class SeedData implements CommandLineRunner
         payrepos.save(payType3);
 
         // Restaurant String name, String address, String city, String state, String telephone
-        String rest1Name = "Apple";
+        String rest1Name = "Apple Test";
         Restaurant r1 = new Restaurant(rest1Name,
                 "123 Main Street",
                 "City", "ST", "555-555-1234",
@@ -62,7 +62,7 @@ public class SeedData implements CommandLineRunner
 
         restaurantrepos.save(r1);
 
-        String rest2Name = "Bird Cafe";
+        String rest2Name = "Bird Cafe Test";
         Restaurant r2 = new Restaurant(rest2Name,
                 "321 Uptown Drive",
                 "Town", "ST", "555-555-5555",
@@ -74,7 +74,7 @@ public class SeedData implements CommandLineRunner
         System.out.println("*** RestaurantId: " + thisone.getRestaurantid() + " ***");
 
 
-        String rest3Name = "Number 1 Eats";
+        String rest3Name = "Number 1 Eats Test";
         Restaurant r3 = new Restaurant(rest3Name,
                 "565 Side Avenue",
                 "Village", "ST", "555-123-1555",

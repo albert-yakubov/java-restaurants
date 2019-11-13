@@ -30,25 +30,29 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 // mocking service to test controller
-
+//todo 6 set unit testing for controller also set up web tester
 @RunWith(SpringRunner.class)
-@WebMvcTest(value = RestaurantController.class, secure = false)
+@WebMvcTest(value = RestaurantController.class)
 public class RestaurantControllerUnitTest
 {
+    //todo 7 bring in mock web environment
 
     @Autowired
     private MockMvc mockMvc;
 
+    //todo 8 creating bean to mocking services
     @MockBean
     private RestaurantService restaurantService;
-
+    //todo 9 create a list to work with restaurants as mock data
     private List<Restaurant> restaurantList;
 
     @Before
     public void setUp() throws Exception
     {
+        // todo 10 initialize the array list that was just created
         restaurantList = new ArrayList<>();
-
+        //todo 11 copy seed data over
+        //todo 12 manually set ids
         Payment payType1 = new Payment("Credit Card");
         payType1.setPaymentid(1);
         Payment payType2 = new Payment("Cash");
@@ -67,6 +71,7 @@ public class RestaurantControllerUnitTest
         ArrayList<RestaurantPayments> noCashPay = new ArrayList<>();
         noCashPay.add(new RestaurantPayments(new Restaurant(), payType1));
         noCashPay.add(new RestaurantPayments(new Restaurant(), payType3));
+        //todo 12 delete any reference to saving
 
         // Restaurant String name, String address, String city, String state, String telephone
         String rest1Name = "Apple";
@@ -83,7 +88,7 @@ public class RestaurantControllerUnitTest
         r1.getMenus().get(3).setMenuId(23);
         r1.getMenus().add(new Menu("Chef Salad", 12.50, r1));
         r1.getMenus().get(4).setMenuId(24);
-
+        //todo 13 instead of saving add it to the array we created
         restaurantList.add(r1);
 
         String rest2Name = "Eagle Cafe";
@@ -95,7 +100,7 @@ public class RestaurantControllerUnitTest
         r2.getMenus().add(new Menu("Barbacoa", 12.75, r2));
         r2.getMenus().get(1).setMenuId(31);
 
-
+        //todo 14 do it to all where you saving and instead just add to array list
         restaurantList.add(r2);
 
         String rest3Name = "Number 1 Eats";
@@ -112,29 +117,32 @@ public class RestaurantControllerUnitTest
     public void tearDown() throws Exception
     {
     }
-
+    //todo 15 after setting up environment (until step 14)
     @Test
     public void listAllRestaurants() throws Exception
     {
+        //todo 16 list the url
         String apiUrl = "/restaurants/restaurants";
-
+        //todo 17 make sure to run the mockito  on restaurant service
         Mockito.when(restaurantService.findAll()).thenReturn(restaurantList);
-
+        // todo 18 build request to send to the server (.get is referenced to GET)
         RequestBuilder rb = MockMvcRequestBuilders.get(apiUrl).accept(MediaType.APPLICATION_JSON);
-
+        // todo 19 run the request if perform is red add throws exception on top
         // the following actually performs a real controller call
         MvcResult r = mockMvc.perform(rb).andReturn(); // this could throw an exception
+        //todo 20 get content of body as string
         String tr = r.getResponse().getContentAsString();
 
+        //todo 21 convert the string back to jsonlist
         ObjectMapper mapper = new ObjectMapper();
         String er = mapper.writeValueAsString(restaurantList);
-
+        //this is just to see the data (not required)
         System.out.println("Expect: " + er);
         System.out.println("Actual: " + tr);
 
         System.out.println("Expect: " + er);
         System.out.println("Actual: " + tr);
-
+        //todo 22 then compare
         assertEquals("Rest API Returns List", er, tr);
     }
 
@@ -211,6 +219,8 @@ public class RestaurantControllerUnitTest
                 "Village", "ST", "555-123-1555",
                 thisPay);
         r3.setRestaurantid(100);
+
+
         ObjectMapper mapper = new ObjectMapper();
         String restaurantString = mapper.writeValueAsString(r3);
 

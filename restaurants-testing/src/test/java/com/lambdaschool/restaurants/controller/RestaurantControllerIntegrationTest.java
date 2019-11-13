@@ -18,19 +18,21 @@ import java.util.ArrayList;
 import static io.restassured.module.mockmvc.RestAssuredMockMvc.given;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.number.OrderingComparison.lessThan;
-
+//todo 24 set up integration test on restaurant controller
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class RestaurantControllerIntegrationTest
 {
+    //todo 25 bring in own application context
     @Autowired
     private WebApplicationContext webApplicationContext;
-
+    //todo 26 set up MockMVC (setup complete )
     @Before
     public void initialiseRestAssuredMockMvcWebApplicationContext()
     {
         RestAssuredMockMvc.webAppContextSetup(webApplicationContext);
     }
+    //todo 26 test the GET to make sure that GET returns response in less than 5 secs
 
     //    GET /restaurants/restaurants
     @Test
@@ -70,9 +72,9 @@ public class RestaurantControllerIntegrationTest
     @Test
     public void givenFoundRestaurantName() throws Exception
     {
-        String aRestaurant = "Apple";
+        String aRestaurant = "Apple Test";
 
-        given().when().get("/restaurants/restaurant/name/" + aRestaurant).then().statusCode(200).and().body(containsString("Apple"));
+        given().when().get("/restaurants/restaurant/name/" + aRestaurant).then().statusCode(200).and().body(containsString("Apple Test"));
     }
 
 
@@ -80,7 +82,7 @@ public class RestaurantControllerIntegrationTest
     @Test
     public void givenFindAllRestaurants()
     {
-        given().when().get("/restaurants/restaurants").then().statusCode(200).and().body(containsString("Apple"));
+        given().when().get("/restaurants/restaurants").then().statusCode(200).and().body(containsString("Apple Test"));
     }
 
 
